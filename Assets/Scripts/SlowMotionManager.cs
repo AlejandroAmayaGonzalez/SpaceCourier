@@ -1,6 +1,6 @@
-using System;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 
 public class SlowMotionManager : MonoBehaviour {
     [Header("Slow Motion Settings")]
@@ -36,7 +36,7 @@ public class SlowMotionManager : MonoBehaviour {
     /// deactivates it. When energy comes to zero, automatically deactivates.
     /// </summary>
     private void HandleInput(){
-        if (Input.GetKeyDown(KeyCode.Q) && currentEnergy > 0){
+        if (Keyboard.current.qKey.wasPressedThisFrame && currentEnergy > 0){
             isSlowMotion = !isSlowMotion;
         }
         if (currentEnergy <= 0){ isSlowMotion = false; }
