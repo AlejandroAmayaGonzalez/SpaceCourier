@@ -9,10 +9,11 @@ public class MenuManager : MonoBehaviour {
     [SerializeField] private GameObject controlsPanel;
     [SerializeField] private GameObject levelSelectionPanel;
 
+    // If a panel is not found don't do nothing
     void Start(){
-        volumePanel.SetActive(false);
-        controlsPanel.SetActive(false);
-        levelSelectionPanel.SetActive(false);
+        volumePanel?.SetActive(false);
+        controlsPanel?.SetActive(false);
+        levelSelectionPanel?.SetActive(false);
     }
 
     public void LoadMainMenu(){
@@ -53,8 +54,10 @@ public class MenuManager : MonoBehaviour {
 
     // Return to main menu from other menus
     public void BackToMainMenu(){
-        levelSelectionPanel.SetActive(false);
         mainMenuPanel.SetActive(true);
+        levelSelectionPanel.SetActive(false);
+        volumePanel.SetActive(false);
+        controlsPanel.SetActive(false);
     }
 
     public void ExitGame(){ Application.Quit(); }
