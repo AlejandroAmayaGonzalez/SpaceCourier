@@ -26,6 +26,9 @@ public class SlowMotionManager : MonoBehaviour {
     }
 
     void Update(){
+        // If the game is paused return
+        if (Time.timeScale == 0f) return;
+        
         HandleInput();
         HandleEnergy();
         HandleTimeScale();
@@ -62,6 +65,8 @@ public class SlowMotionManager : MonoBehaviour {
     /// Slow downs or not depending the energy.
     /// </summary>
     private void HandleTimeScale(){
+        if (Time.timeScale == 0f) return;
+        
         float targetScale = isSlowMotion ? slowMotionScale : 1f;
 
         // Create a soft transition between scales

@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class CollisionManager : MonoBehaviour {
     [Header("Audio Settings")]
@@ -14,11 +15,18 @@ public class CollisionManager : MonoBehaviour {
     [SerializeField] private ParticleSystem landingParticles;
     [SerializeField] private float crashDelay = 2f;
 
+    [Header("HUD elements")]
+    [SerializeField] private TextMeshProUGUI healthHUD;
+
     AudioSource audioSource;
+    PlayerHealth playerHealth;
     bool isControllable = true;
 
     void Start(){
+        playerHealth = GetComponent<PlayerHealth>();
         audioSource = GetComponent<AudioSource>();
+
+        UpdateHealth();
     }
 
     void OnCollisionEnter(Collision collision){
@@ -29,17 +37,21 @@ public class CollisionManager : MonoBehaviour {
                 DieOrSuccess(landingSuccessAudioClip, landingParticles);
                 break;
             case "Explosion":
+                playerHealth.TakeDamage(playerHealth.currentHealth);
                 DieOrSuccess(explosionAudioClip, explosionParticles);
                 break;
             case "Enemy":
                 EnemyHit(collision.gameObject);
-                break;                        
+                break;                      
         }
+
+        UpdateHealth();
     }
 
-    // For the mine explosion
+    /// For the mine explosion
     void OnTriggerEnter(Collider other){
         EnterMineZone(other.gameObject);
+        UpdateHealth();
     }
 
     private void PlayAudio(AudioClip audioClip){
@@ -48,10 +60,20 @@ public class CollisionManager : MonoBehaviour {
     }
 
     /// <summary>
+    /// Set the current health in the HUD
+    /// </summary>
+    private void UpdateHealth(){
+        healthHUD.SetText(
+            "Health -> " + playerHealth.currentHealth + 
+            "/" + playerHealth.maxHealth
+        );
+    }
+
+    /// <summary>
     /// Manages when the player enters the explosion range of a mine
     /// </summary>
     private void EnterMineZone(GameObject mineObj){
-        PlayerHealth playerHealth = GetComponent<PlayerHealth>();
+        playerHealth = GetComponent<PlayerHealth>();
         playerHealth.TakeDamage(playerHealth.currentHealth);
 
         PlayAudio(mineExplosionSound);

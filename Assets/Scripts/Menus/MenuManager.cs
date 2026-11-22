@@ -11,9 +11,12 @@ public class MenuManager : MonoBehaviour {
 
     // If a panel is not found don't do nothing
     void Start(){
+        mainMenuPanel?.SetActive(true);
         volumePanel?.SetActive(false);
         controlsPanel?.SetActive(false);
         levelSelectionPanel?.SetActive(false);
+
+        Time.timeScale = 1f;
     }
 
     public void LoadMainMenu(){
@@ -38,7 +41,7 @@ public class MenuManager : MonoBehaviour {
 
     public void OpenVolumeSettings(){
         mainMenuPanel.SetActive(false);
-        controlsPanel.SetActive(true);
+        volumePanel.SetActive(true);
     }
 
     public void SeeCredits(){

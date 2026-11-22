@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -6,7 +5,7 @@ using UnityEngine.SceneManagement;
 public class PlayerHealth : MonoBehaviour {
     
     [Header("Health settings")]
-    [SerializeField] private int maxHealth = 5;
+    [SerializeField] public int maxHealth = 5;
     [SerializeField] private ParticleSystem deadParticles;
     [SerializeField] private AudioClip deadSound;
     
@@ -23,6 +22,9 @@ public class PlayerHealth : MonoBehaviour {
 
     void Start(){
         currentHealth = maxHealth;
+        // Set min and max value for it
+        currentHealth = Mathf.Clamp(currentHealth, 0, 5);
+
         // Get all spriteRenderer
         meshes = GetComponentsInChildren<MeshRenderer>();
 
@@ -36,6 +38,7 @@ public class PlayerHealth : MonoBehaviour {
     public void TakeDamage(int enemyDamage){
         if (isVulnerable){
             currentHealth -= enemyDamage;
+            currentHealth = Mathf.Clamp(currentHealth, 0, 5);
 
             if (currentHealth <= 0){
                 StartCoroutine(Die());
@@ -49,6 +52,7 @@ public class PlayerHealth : MonoBehaviour {
     /// Blinks and gives invulnerability to the player when is hit
     /// </summary>
     private IEnumerator Blink(int numberBlink){
+        
         isVulnerable = false;
 
         do{
@@ -71,6 +75,7 @@ public class PlayerHealth : MonoBehaviour {
     }
 
     private IEnumerator Die(){
+
         for (int i = 0; i < meshes.Length; i++){
             meshes[i].enabled = false;
         }

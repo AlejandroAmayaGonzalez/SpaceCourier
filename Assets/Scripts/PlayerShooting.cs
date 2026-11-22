@@ -1,4 +1,4 @@
-using NUnit.Framework.Constraints;
+using TMPro;
 using UnityEngine;
 
 public class PlayerShooting : MonoBehaviour {
@@ -15,13 +15,18 @@ public class PlayerShooting : MonoBehaviour {
     [Header("Audio Settings")]
     [SerializeField] private AudioClip bulletSound;
 
+    [Header("HUD Elements")]
+    [SerializeField] private TextMeshProUGUI ammoHUD;
+
     private Transform bulletSpawnPoint;
     private ObjectPull bulletPool;
     private float lastShotTime = 0f;
 
     void Start(){ 
-        bulletPool = GetComponent<ObjectPull>(); 
+        bulletPool = GetComponent<ObjectPull>();
         bulletSpawnPoint = transform.Find("ShootPoint");
+
+        UpdateAmmo();
     }
 
     /// <summary>
@@ -34,10 +39,17 @@ public class PlayerShooting : MonoBehaviour {
     }
 
     /// <summary>
+    /// Shows in HUD the current ammo
+    /// </summary>
+    private void UpdateAmmo(){
+        ammoHUD.SetText("Bullets -> " + currentAmmo + "/" + maxAmmo);
+    }
+
+    /// <summary>
     /// Shoot a bullet
     /// </summary>
     public void Shoot(){
-        if (CanShoot()){
+        if (CanShoot() && Time.timeScale != 0){
             // Update last shot time
             lastShotTime = Time.time;
             
@@ -55,6 +67,9 @@ public class PlayerShooting : MonoBehaviour {
             // Apply speed and movement
             Rigidbody bulletRigidBody = bullet.GetComponent<Rigidbody>();
             bulletRigidBody.linearVelocity = bulletSpawnPoint.up * bulletSpeed;
+
+            // Update in HUD
+            UpdateAmmo();
         }
     }
 }

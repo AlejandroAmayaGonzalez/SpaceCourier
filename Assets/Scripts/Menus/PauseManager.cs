@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 
 public class PauseManager : MonoBehaviour {
     
+    [Header("HUD panels")]
     [SerializeField] private GameObject pausePanel;
     [SerializeField] private GameObject controlPanel;
     [SerializeField] private GameObject volumePanel;
@@ -32,13 +33,17 @@ public class PauseManager : MonoBehaviour {
 
     public void Pause(){
         pausePanel.SetActive(true);
+
         Time.timeScale = 0f;
+
         isPaused = true;
     }
 
     public void Resume(){
         pausePanel.SetActive(false);
+
         Time.timeScale = 1f;
+
         isPaused = false;
     }
 
@@ -49,13 +54,13 @@ public class PauseManager : MonoBehaviour {
 
     public void OpenVolume(){
         pausePanel.SetActive(false);
-        volumePanel.SetActive(true); 
+        volumePanel.SetActive(true);
     }
 
     public void Back(){
         pausePanel.SetActive(true);
-        controlPanel.SetActive(false); 
-        volumePanel.SetActive(false); 
+        controlPanel.SetActive(false);
+        volumePanel.SetActive(false);
     }
 
     public void LoadMainMenu(){
