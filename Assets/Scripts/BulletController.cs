@@ -23,11 +23,11 @@ public class BulletController : MonoBehaviour {
 
         if (other.CompareTag("Enemy") || other.CompareTag("Mine")){
             other.gameObject.GetComponent<EnemyHealth>().TakeDamage(bulletDamage);
-
-            // Play hit sound and particles
-            AudioSource.PlayClipAtPoint(hitSound, transform.position, 5f);
-            hitParticles.Play();
-            DeactivateBullet();
         }
+        
+        // Play hit sound and particles
+        AudioSource.PlayClipAtPoint(hitSound, transform.position, 5f);
+        hitParticles.Play();
+        DeactivateBullet();
     }
 }

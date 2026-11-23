@@ -10,6 +10,7 @@ TagManager:
   - Bullet
   - Enemy
   - Mine
+  - AmmoBox
   layers:
   - Default
   - TransparentFX

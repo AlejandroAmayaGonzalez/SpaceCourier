@@ -50,8 +50,10 @@ public class CollisionManager : MonoBehaviour {
 
     /// For the mine explosion
     void OnTriggerEnter(Collider other){
-        EnterMineZone(other.gameObject);
-        UpdateHealth();
+        if(other.CompareTag("Mine")){
+            EnterMineZone(other.gameObject);
+            UpdateHealth();    
+        }
     }
 
     private void PlayAudio(AudioClip audioClip){

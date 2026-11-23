@@ -22,6 +22,12 @@ public class PlayerShooting : MonoBehaviour {
     private ObjectPull bulletPool;
     private float lastShotTime = 0f;
 
+    // Get and Set for maxAmmo and currentAmmo
+    public int CurrentAmmo{
+        get { return currentAmmo; }
+        set { currentAmmo = Mathf.Clamp(value, 0, maxAmmo); }
+    }
+
     void Start(){ 
         bulletPool = GetComponent<ObjectPull>();
         bulletSpawnPoint = transform.Find("ShootPoint");
@@ -41,7 +47,7 @@ public class PlayerShooting : MonoBehaviour {
     /// <summary>
     /// Shows in HUD the current ammo
     /// </summary>
-    private void UpdateAmmo(){
+    public void UpdateAmmo(){
         ammoHUD.SetText("Bullets -> " + currentAmmo + "/" + maxAmmo);
     }
 
