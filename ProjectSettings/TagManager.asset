@@ -11,6 +11,12 @@ TagManager:
   - Enemy
   - Mine
   - AmmoBox
+  - MasterSlider
+  - MasterText
+  - MusicSlider
+  - MusicText
+  - SFXSlider
+  - SFXText
   layers:
   - Default
   - TransparentFX

@@ -99,8 +99,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BulletController
   bulletLifeTime: 3
+  bulletDamage: 1
   hitParticles: {fileID: 8500987123099879453}
   hitSound: {fileID: 8300000, guid: b3ab26a634c695f49bb6aecf0bb2788e, type: 3}
+  sfxGroup: {fileID: -5351224461265829976, guid: 031c7b6e1f3da3140b24a0055e6f8efe, type: 2}
 --- !u!1 &3585594593242577515
 GameObject:
   m_ObjectHideFlags: 0

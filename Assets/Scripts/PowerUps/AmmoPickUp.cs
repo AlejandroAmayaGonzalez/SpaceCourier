@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class AmmoPickUp : MonoBehaviour {
    
@@ -7,10 +8,7 @@ public class AmmoPickUp : MonoBehaviour {
 
    [Header("PowerUp Settings")]
    [SerializeField] AudioClip pickPowerUpSound;
-   
-   AudioSource audioSource;
-
-    void Start(){ audioSource = GetComponent<AudioSource>(); }
+   [SerializeField] private AudioMixerGroup sfxGroup;
 
     void OnTriggerEnter(Collider other){
         if (!other.CompareTag("Player")) return;
@@ -19,7 +17,7 @@ public class AmmoPickUp : MonoBehaviour {
 
         if (playerShoot == null) return;
 
-        audioSource.PlayOneShot(pickPowerUpSound);
+        AudioHelper.PlaySound(pickPowerUpSound, transform.position, sfxGroup);
 
         // Refill all bullets
         playerShoot.CurrentAmmo += ammoData.ammoAmount;

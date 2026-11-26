@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
 
 public class PlayerHealth : MonoBehaviour {
@@ -7,7 +8,10 @@ public class PlayerHealth : MonoBehaviour {
     [Header("Health settings")]
     [SerializeField] public int maxHealth = 5;
     [SerializeField] private ParticleSystem deadParticles;
+
+    [Header("Audio Settings")]
     [SerializeField] private AudioClip deadSound;
+    [SerializeField] private AudioMixerGroup sfxGroup;
     
     [Header("Blink Settings")]
     [SerializeField] private float blinkDuration = 0.3f;
@@ -15,7 +19,6 @@ public class PlayerHealth : MonoBehaviour {
 
     private bool isVulnerable = true;
     public int currentHealth;
-    private AudioSource audioSource;
     
     // Starship's Sprites
     private MeshRenderer[] meshes;
@@ -27,8 +30,6 @@ public class PlayerHealth : MonoBehaviour {
 
         // Get all spriteRenderer
         meshes = GetComponentsInChildren<MeshRenderer>();
-
-        audioSource = GetComponent<AudioSource>();
     }
 
     /// <summary>
@@ -81,8 +82,7 @@ public class PlayerHealth : MonoBehaviour {
         }
 
         // Play the particles and sound
-        audioSource.Stop();
-        audioSource.PlayOneShot(deadSound);
+        AudioHelper.PlaySound(deadSound, transform.position, sfxGroup);
         deadParticles.Play();  
 
         yield return new WaitForSeconds(1f);  // Wait until the particles finish

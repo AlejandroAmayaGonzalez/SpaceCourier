@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
+using UnityEngine.Audio;
 
 public class CollisionManager : MonoBehaviour {
     [Header("Audio Settings")]
@@ -9,6 +10,7 @@ public class CollisionManager : MonoBehaviour {
     [SerializeField] private AudioClip landingSuccessAudioClip;
     [SerializeField] private AudioClip enemyHitSound;
     [SerializeField] private AudioClip mineExplosionSound;
+    [SerializeField] private AudioMixerGroup sfxGroup;
 
     [Header("Particle Systems")]
     [SerializeField] private ParticleSystem explosionParticles;
@@ -18,13 +20,11 @@ public class CollisionManager : MonoBehaviour {
     [Header("HUD elements")]
     [SerializeField] private TextMeshProUGUI healthHUD;
 
-    AudioSource audioSource;
     PlayerHealth playerHealth;
     bool isControllable = true;
 
     void Start(){
         playerHealth = GetComponent<PlayerHealth>();
-        audioSource = GetComponent<AudioSource>();
 
         UpdateHealth();
     }
@@ -34,11 +34,11 @@ public class CollisionManager : MonoBehaviour {
 
         switch (collision.gameObject.tag){
             case "LandingPad":
-                DieOrSuccess(landingSuccessAudioClip, landingParticles);
+                DieOrSuccess(landingSuccessAudioClip, landingParticles, collision.gameObject);
                 break;
             case "Explosion":
                 playerHealth.TakeDamage(playerHealth.currentHealth);
-                DieOrSuccess(explosionAudioClip, explosionParticles);
+                DieOrSuccess(explosionAudioClip, explosionParticles, collision.gameObject);
                 break;
             case "Enemy":
                 EnemyHit(collision.gameObject);
@@ -56,9 +56,8 @@ public class CollisionManager : MonoBehaviour {
         }
     }
 
-    private void PlayAudio(AudioClip audioClip){
-        audioSource.Stop();
-        audioSource.PlayOneShot(audioClip);
+    private void PlayAudio(AudioClip audioClip, GameObject obj){
+        AudioHelper.PlaySound(audioClip, obj.transform.position, sfxGroup);
     }
 
     /// <summary>
@@ -78,7 +77,7 @@ public class CollisionManager : MonoBehaviour {
         playerHealth = GetComponent<PlayerHealth>();
         playerHealth.TakeDamage(playerHealth.currentHealth);
 
-        PlayAudio(mineExplosionSound);
+        PlayAudio(mineExplosionSound, mineObj);
 
         mineObj.GetComponent<EnemyHealth>().TakeDamage(mineObj.GetComponent<EnemyHealth>().currenthealth);
     }
@@ -88,7 +87,7 @@ public class CollisionManager : MonoBehaviour {
     /// </summary>
     /// <param name="obj">the gameobject to get the enemy damage</param>
     private void EnemyHit(GameObject obj){
-        PlayAudio(enemyHitSound);
+        PlayAudio(enemyHitSound, obj);
 
         GetComponent<PlayerHealth>().TakeDamage(
             obj.GetComponent<EnemyHealth>().enemyData.damage
@@ -99,10 +98,10 @@ public class CollisionManager : MonoBehaviour {
     /// Manages the collision event, disabling player control, reproducing the audioClip.
     /// </summary>
     /// <param name="audioClip">the audio played when the collision occurs</param>
-    private void DieOrSuccess(AudioClip audioClip, ParticleSystem particleSystem){
+    private void DieOrSuccess(AudioClip audioClip, ParticleSystem particleSystem, GameObject obj){
         isControllable = false;
 
-        PlayAudio(audioClip);
+        PlayAudio(audioClip, obj);
 
         particleSystem.Play();
 

@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class BulletController : MonoBehaviour {
     
@@ -8,8 +9,9 @@ public class BulletController : MonoBehaviour {
     [SerializeField] private int bulletDamage = 1;
     [SerializeField] private ParticleSystem hitParticles;
 
-    [Header("Bullet Hit Sounds")]
+    [Header("Bullet Audio")]
     [SerializeField] private AudioClip hitSound;
+    [SerializeField] private AudioMixerGroup sfxGroup;
 
     void OnEnable(){
         Invoke(nameof(DeactivateBullet), bulletLifeTime);
@@ -26,7 +28,7 @@ public class BulletController : MonoBehaviour {
         }
         
         // Play hit sound and particles
-        AudioSource.PlayClipAtPoint(hitSound, transform.position, 5f);
+        AudioHelper.PlaySound(hitSound, transform.position, sfxGroup);
         hitParticles.Play();
         DeactivateBullet();
     }

@@ -2555,7 +2555,7 @@ AudioSource:
   m_GameObject: {fileID: 2571484925438150159}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -5351224461265829976, guid: 031c7b6e1f3da3140b24a0055e6f8efe, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 0
@@ -2659,9 +2659,11 @@ MonoBehaviour:
   landingSuccessAudioClip: {fileID: 8300000, guid: 4b5b13dc4e8bb4b4cb8ac26aa5392a63, type: 3}
   enemyHitSound: {fileID: 8300000, guid: c90897c1bf46be94abd606dad998c990, type: 3}
   mineExplosionSound: {fileID: 8300000, guid: 05d238cccd58c8f44aa6e18bcd706804, type: 3}
+  sfxGroup: {fileID: 0}
   explosionParticles: {fileID: 7771947726566412720}
   landingParticles: {fileID: 5443950017110395518}
   crashDelay: 2
+  healthHUD: {fileID: 0}
 --- !u!114 &1775355965515163355
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2694,6 +2696,7 @@ MonoBehaviour:
   bulletSpeed: 20
   bulletRate: 0.5
   bulletSound: {fileID: 8300000, guid: 0d94843deddcffe4eb1ab7bc23245117, type: 3}
+  ammoHUD: {fileID: 0}
 --- !u!114 &841289963019543379
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2709,6 +2712,7 @@ MonoBehaviour:
   maxHealth: 5
   deadParticles: {fileID: 7771947726566412720}
   deadSound: {fileID: 8300000, guid: 558c923360273194ab2b15484e4bff5a, type: 3}
+  sfxGroup: {fileID: -5351224461265829976, guid: 031c7b6e1f3da3140b24a0055e6f8efe, type: 2}
   blinkDuration: 0.3
   blinkColor: {r: 0.8588236, g: 0.4392157, b: 0.5764706, a: 1}
   currentHealth: 0
